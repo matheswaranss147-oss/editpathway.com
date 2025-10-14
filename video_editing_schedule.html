@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3-Month Video Editing Schedule</title>
+<link rel="stylesheet" href="style.css" />
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAHGCDOcFfRY-qZd6YigpbzVncL5BP7_Nc",
+    authDomain: "ve-tracking-website.firebaseapp.com",
+    projectId: "ve-tracking-website",
+    storageBucket: "ve-tracking-website.firebasestorage.app",
+    messagingSenderId: "1040607999975",
+    appId: "1:1040607999975:web:a6d3e89aec5c95d3442f42",
+    measurementId: "G-7RTT8PL6VK"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+<!-- Firebase Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database-compat.js"></script>
+
+<script>
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+</script>
+
+
+<script>
+  // Function to send checkbox state to Firebase
+  function updateProgress(dayId, isChecked) {
+    // Write to path: /videoEditingProgress/dayId
+    database.ref('videoEditingProgress/' + dayId).set({
+      completed: isChecked,
+      timestamp: Date.now()
+    })
+    .then(() => {
+      console.log(`Day ${dayId} status updated to ${isChecked}.`);
+    })
+    .catch((error) => {
+      console.error('Error updating Firebase:', error);
+    });
+  }
+
+  // Attach event listeners to all checkboxes after DOM loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(box => {
+      box.addEventListener('change', (event) => {
+        const dayId = event.target.id.replace('day', ''); // e.g. "day5" -> "5"
+        const isChecked = event.target.checked;
+        updateProgress(dayId, isChecked);
+      });
+    });
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  
+  // Load checkbox states from Firebase
+  database.ref('videoEditingProgress').once('value').then(snapshot => {
+    const progressData = snapshot.val() || {};
+    checkboxes.forEach(box => {
+      const dayId = box.id.replace('day', '');
+      if (progressData[dayId] && progressData[dayId].completed) {
+        box.checked = true;
+      } else {
+        box.checked = false;
+      }
+    });
+  });
+
+  // Attach event listeners to update Firebase on change
+  checkboxes.forEach(box => {
+    box.addEventListener('change', (event) => {
+      const dayId = event.target.id.replace('day', '');
+      const isChecked = event.target.checked;
+      updateProgress(dayId, isChecked);
+    });
+  });
+});
+</script>
+
+</head>
+<body>
+<h1>3-Month Video Editing Self-Study Schedule</h1>
+<form>
+  <div class="week">
+    <h2>Month 1: Beginner Level – Fundamentals and Basic Editing</h2>
+    <h3>Week 1: Introduction & Software Setup</h3>
+    <ul>
+      <li><input type="checkbox" id="day1" /><label for="day1"> Day 1: Overview of video editing, uses, and career paths</label></li>
+      <li><input type="checkbox" id="day2" /><label for="day2"> Day 2: Choose & install video editing software (DaVinci Resolve or Premiere Pro)</label></li>
+      <li><input type="checkbox" id="day3" /><label for="day3"> Day 3: Explore software interface: timeline, media pool, viewer, panels</label></li>
+      <li><input type="checkbox" id="day4" /><label for="day4"> Day 4: Create new project, understand project settings (resolution, frame rate)</label></li>
+      <li><input type="checkbox" id="day5" /><label for="day5"> Day 5: Import media files & organize with folders and naming conventions</label></li>
+      <li><input type="checkbox" id="day6" /><label for="day6"> Day 6: Practice navigating timeline and preview window</label></li>
+      <li><input type="checkbox" id="day7" /><label for="day7"> Day 7: Review & small practice project importing media, setting sequence</label></li>
+    </ul>
+
+    <h3>Week 2: Basic Editing Techniques</h3>
+    <ul>
+      <li><input type="checkbox" id="day8" /><label for="day8"> Day 8: Learn how to add clips to timeline, trimming basics</label></li>
+      <li><input type="checkbox" id="day9" /><label for="day9"> Day 9: Practice cutting clips using blade/razor tool, keyboard shortcuts</label></li>
+      <li><input type="checkbox" id="day10" /><label for="day10"> Day 10: Understand cuts: jump cut, L-cut, J-cut with examples</label></li>
+      <li><input type="checkbox" id="day11" /><label for="day11"> Day 11: Add and adjust basic transitions: cut, fade, dissolve</label></li>
+      <li><input type="checkbox" id="day12" /><label for="day12"> Day 12: Arrange clips into simple sequences telling a story</label></li>
+      <li><input type="checkbox" id="day13" /><label for="day13"> Day 13: Practice editing a short video with cuts and transitions</label></li>
+      <li><input type="checkbox" id="day14" /><label for="day14"> Day 14: Review and refine simple edit, export for sharing</label></li>
+    </ul>
+
+    <h3>Week 3: Audio & Text Basics</h3>
+    <ul>
+      <li><input type="checkbox" id="day15" /><label for="day15"> Day 15: Import and adjust audio levels, syncing audio with video</label></li>
+      <li><input type="checkbox" id="day16" /><label for="day16"> Day 16: Add background music and sound effects</label></li>
+      <li><input type="checkbox" id="day17" /><label for="day17"> Day 17: Practice audio mixing and fade in/out techniques</label></li>
+      <li><input type="checkbox" id="day18" /><label for="day18"> Day 18: Create titles and text overlays, customize fonts and colors</label></li>
+      <li><input type="checkbox" id="day19" /><label for="day19"> Day 19: Add simple text animations and motion to text</label></li>
+      <li><input type="checkbox" id="day20" /><label for="day20"> Day 20: Practice adding and editing titles in a sample project</label></li>
+      <li><input type="checkbox" id="day21" /><label for="day21"> Day 21: Review and export project with audio and titles</label></li>
+    </ul>
+
+    <h3>Week 4: Basic Color Correction</h3>
+    <ul>
+      <li><input type="checkbox" id="day22" /><label for="day22"> Day 22: Introduction to color correction principles: brightness, contrast</label></li>
+      <li><input type="checkbox" id="day23" /><label for="day23"> Day 23: Practice adjusting saturation, white balance</label></li>
+      <li><input type="checkbox" id="day24" /><label for="day24"> Day 24: Use software color correction tools on sample clips</label></li>
+      <li><input type="checkbox" id="day25" /><label for="day25"> Day 25: Learn to apply LUTs & presets for color grading basics</label></li>
+      <li><input type="checkbox" id="day26" /><label for="day26"> Day 26: Practice color grading a short sequence</label></li>
+      <li><input type="checkbox" id="day27" /><label for="day27"> Day 27: Review all beginner topics: trim, cut, transitions, audio, color</label></li>
+      <li><input type="checkbox" id="day28" /><label for="day28"> Day 28: Create a simple 1-2 minute video using all beginner skills</label></li>
+    </ul>
+<!-- Similarly add other months and weeks with checkboxes -->
+<!-- Due to space, only the first month displayed here; the full file would continue similarly for 90 days -->
+
+  </div>
+</form>
+
+<h1>3-Month Video Editing Self-Study Schedule</h1>
+<form>
+  <div class="week">
+    <h2>Month 1: Beginner Level – Fundamentals and Basic Editing</h2>
+    <h3>Week 1: Introduction & Software Setup</h3>
+    <ul>
+      <li><input type="checkbox" id="day1" /><label for="day1"> Day 1: Overview of video editing, uses, and career paths</label></li>
+      <li><input type="checkbox" id="day2" /><label for="day2"> Day 2: Choose & install video editing software (DaVinci Resolve or Premiere Pro)</label></li>
+      <li><input type="checkbox" id="day3" /><label for="day3"> Day 3: Explore software interface: timeline, media pool, viewer, panels</label></li>
+      <li><input type="checkbox" id="day4" /><label for="day4"> Day 4: Create new project, understand project settings (resolution, frame rate)</label></li>
+      <li><input type="checkbox" id="day5" /><label for="day5"> Day 5: Import media files & organize with folders and naming conventions</label></li>
+      <li><input type="checkbox" id="day6" /><label for="day6"> Day 6: Practice navigating timeline and preview window</label></li>
+      <li><input type="checkbox" id="day7" /><label for="day7"> Day 7: Review & small practice project importing media, setting sequence</label></li>
+    </ul>
+
+    <h3>Week 2: Basic Editing Techniques</h3>
+    <ul>
+      <li><input type="checkbox" id="day8" /><label for="day8"> Day 8: Learn how to add clips to timeline, trimming basics</label></li>
+      <li><input type="checkbox" id="day9" /><label for="day9"> Day 9: Practice cutting clips using blade/razor tool, keyboard shortcuts</label></li>
+      <li><input type="checkbox" id="day10" /><label for="day10"> Day 10: Understand cuts: jump cut, L-cut, J-cut with examples</label></li>
+      <li><input type="checkbox" id="day11" /><label for="day11"> Day 11: Add and adjust basic transitions: cut, fade, dissolve</label></li>
+      <li><input type="checkbox" id="day12" /><label for="day12"> Day 12: Arrange clips into simple sequences telling a story</label></li>
+      <li><input type="checkbox" id="day13" /><label for="day13"> Day 13: Practice editing a short video with cuts and transitions</label></li>
+      <li><input type="checkbox" id="day14" /><label for="day14"> Day 14: Review and refine simple edit, export for sharing</label></li>
+    </ul>
+
+    <h3>Week 3: Audio & Text Basics</h3>
+    <ul>
+      <li><input type="checkbox" id="day15" /><label for="day15"> Day 15: Import and adjust audio levels, syncing audio with video</label></li>
+      <li><input type="checkbox" id="day16" /><label for="day16"> Day 16: Add background music and sound effects</label></li>
+      <li><input type="checkbox" id="day17" /><label for="day17"> Day 17: Practice audio mixing and fade in/out techniques</label></li>
+      <li><input type="checkbox" id="day18" /><label for="day18"> Day 18: Create titles and text overlays, customize fonts and colors</label></li>
+      <li><input type="checkbox" id="day19" /><label for="day19"> Day 19: Add simple text animations and motion to text</label></li>
+      <li><input type="checkbox" id="day20" /><label for="day20"> Day 20: Practice adding and editing titles in a sample project</label></li>
+      <li><input type="checkbox" id="day21" /><label for="day21"> Day 21: Review and export project with audio and titles</label></li>
+    </ul>
+
+    <h3>Week 4: Basic Color Correction</h3>
+    <ul>
+      <li><input type="checkbox" id="day22" /><label for="day22"> Day 22: Introduction to color correction principles: brightness, contrast</label></li>
+      <li><input type="checkbox" id="day23" /><label for="day23"> Day 23: Practice adjusting saturation, white balance</label></li>
+      <li><input type="checkbox" id="day24" /><label for="day24"> Day 24: Use software color correction tools on sample clips</label></li>
+      <li><input type="checkbox" id="day25" /><label for="day25"> Day 25: Learn to apply LUTs & presets for color grading basics</label></li>
+      <li><input type="checkbox" id="day26" /><label for="day26"> Day 26: Practice color grading a short sequence</label></li>
+      <li><input type="checkbox" id="day27" /><label for="day27"> Day 27: Review all beginner topics: trim, cut, transitions, audio, color</label></li>
+      <li><input type="checkbox" id="day28" /><label for="day28"> Day 28: Create a simple 1-2 minute video using all beginner skills</label></li>
+    </ul>
+<!-- Similarly add other months and weeks with checkboxes -->
+<!-- Due to space, only the first month displayed here; the full file would continue similarly for 90 days -->
+
+  </div>
+</form>
+<div class="week">
+  <h2>Month 3: Advanced Level – Mastery and Portfolio</h2>
+
+  <h3>Week 9: Project Planning & Pre-Production</h3>
+  <ul>
+    <li><input type="checkbox" id="day57" /><label for="day57"> Day 57: Brainstorm project ideas and write scripts or outlines</label></li>
+    <li><input type="checkbox" id="day58" /><label for="day58"> Day 58: Create storyboards and shot lists for final project</label></li>
+    <li><input type="checkbox" id="day59" /><label for="day59"> Day 59: Plan shoot or gather existing footage for project</label></li>
+    <li><input type="checkbox" id="day60" /><label for="day60"> Day 60: Review assets and prepare editing workflow</label></li>
+  </ul>
+
+  <h3>Week 10: Final Project Editing</h3>
+  <ul>
+    <li><input type="checkbox" id="day61" /><label for="day61"> Day 61: Edit rough cut, arrange all footage with attention to pacing</label></li>
+    <li><input type="checkbox" id="day62" /><label for="day62"> Day 62: Edit rough cut, arrange all footage with attention to pacing</label></li>
+    <li><input type="checkbox" id="day63" /><label for="day63"> Day 63: Edit rough cut, arrange all footage with attention to pacing</label></li>
+    <li><input type="checkbox" id="day64" /><label for="day64"> Day 64: Fine-tune audio, add sound design and music</label></li>
+    <li><input type="checkbox" id="day65" /><label for="day65"> Day 65: Fine-tune audio, add sound design and music</label></li>
+    <li><input type="checkbox" id="day66" /><label for="day66"> Day 66: Fine-tune audio, add sound design and music</label></li>
+    <li><input type="checkbox" id="day67" /><label for="day67"> Day 67: Apply color grading and motion graphic elements</label></li>
+    <li><input type="checkbox" id="day68" /><label for="day68"> Day 68: Apply color grading and motion graphic elements</label></li>
+    <li><input type="checkbox" id="day69" /><label for="day69"> Day 69: Add titles, credits, and subtitles as needed</label></li>
+    <li><input type="checkbox" id="day70" /><label for="day70"> Day 70: Review complete draft and get feedback</label></li>
+  </ul>
+
+  <h3>Week 11: Refinement & Troubleshooting</h3>
+  <ul>
+    <li><input type="checkbox" id="day71" /><label for="day71"> Day 71: Polish edit: fix sync, smooth transitions, correct color/audio issues</label></li>
+    <li><input type="checkbox" id="day72" /><label for="day72"> Day 72: Polish edit: fix sync, smooth transitions, correct color/audio issues</label></li>
+    <li><input type="checkbox" id="day73" /><label for="day73"> Day 73: Polish edit: fix sync, smooth transitions, correct color/audio issues</label></li>
+    <li><input type="checkbox" id="day74" /><label for="day74"> Day 74: Polish edit: fix sync, smooth transitions, correct color/audio issues</label></li>
+    <li><input type="checkbox" id="day75" /><label for="day75"> Day 75: Troubleshoot project technical issues (render errors, format issues)</label></li>
+    <li><input type="checkbox" id="day76" /><label for="day76"> Day 76: Troubleshoot project technical issues (render errors, format issues)</label></li>
+    <li><input type="checkbox" id="day77" /><label for="day77"> Day 77: Troubleshoot project technical issues (render errors, format issues)</label></li>
+    <li><input type="checkbox" id="day78" /><label for="day78"> Day 78: Prepare final export settings for target platform(s)</label></li>
+    <li><input type="checkbox" id="day79" /><label for="day79"> Day 79: Export final versions and create portfolio copies</label></li>
+  </ul>
+
+  <h3>Week 12: Presentation & Next Steps</h3>
+  <ul>
+    <li><input type="checkbox" id="day80" /><label for="day80"> Day 80: Present project to peers or mentor for critique</label></li>
+    <li><input type="checkbox" id="day81" /><label for="day81"> Day 81: Present project to peers or mentor for critique</label></li>
+    <li><input type="checkbox" id="day82" /><label for="day82"> Day 82: Present project to peers or mentor for critique</label></li>
+    <li><input type="checkbox" id="day83" /><label for="day83"> Day 83: Make final adjustments based on feedback</label></li>
+    <li><input type="checkbox" id="day84" /><label for="day84"> Day 84: Make final adjustments based on feedback</label></li>
+    <li><input type="checkbox" id="day85" /><label for="day85"> Day 85: Make final adjustments based on feedback</label></li>
+    <li><input type="checkbox" id="day86" /><label for="day86"> Day 86: Upload portfolio videos, create showreel</label></li>
+    <li><input type="checkbox" id="day87" /><label for="day87"> Day 87: Upload portfolio videos, create showreel</label></li>
+    <li><input type="checkbox" id="day88" /><label for="day88"> Day 88: Upload portfolio videos, create showreel</label></li>
+    <li><input type="checkbox" id="day89" /><label for="day89"> Day 89: Plan continued learning and exploring advanced techniques (visual effects, 3D editing, etc.)</label></li>
+    <li><input type="checkbox" id="day90" /><label for="day90"> Day 90: Plan continued learning and exploring advanced techniques (visual effects, 3D editing, etc.)</label></li>
+  </ul>
+</div>
+</body>
+</html>
