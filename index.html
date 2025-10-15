@@ -96,7 +96,39 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+<script>
+  // Set up the Google provider
+  const provider = new firebase.auth.GoogleAuthProvider();
 
+  document.addEventListener('DOMContentLoaded', () => {
+    // Login button click handler
+    document.getElementById('google-login-btn').addEventListener('click', () => {
+      firebase.auth().signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          document.getElementById('user-info').textContent = 
+            "Hello, " + user.displayName;
+          document.getElementById('google-login-btn').style.display = "none";
+        })
+        .catch(error => {
+          alert("Login failed: " + error.message);
+        });
+    });
+
+    // If user already signed in, show greeting and hide button
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById('user-info').textContent = 
+          "Hello, " + user.displayName;
+        document.getElementById('google-login-btn').style.display = "none";
+      } else {
+        document.getElementById('user-info').textContent = "";
+        document.getElementById('google-login-btn').style.display = "";
+      }
+    });
+  });
+</script>
 </head>
 <body>
   <div id="login-section">
@@ -267,4 +299,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
 
