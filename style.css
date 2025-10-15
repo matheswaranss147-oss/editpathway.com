@@ -5,7 +5,22 @@ body {
   margin: 20px;
   padding: 0 15px;
 }
+#google-login-btn {
+  background: #fff;
+  color: #444;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-bottom: 10px;
+}
 
+#google-login-btn:hover {
+  background: #f7f7f7;
+  box-shadow: 0 2px 6px rgba(60,60,60,0.08);
+}
 h1 {
   text-align: center;
   color: #005f73;
@@ -67,4 +82,5 @@ label {
   input[type='checkbox'] {
     transform: scale(1.1);
   }
+
 }
